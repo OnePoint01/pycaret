@@ -1,4 +1,12 @@
-pip install -r requirements.txt
+# Import necessary libraries
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Import necessary functions from PyCaret
+from pycaret.classification import setup as setup_clf, automl as automl_clf
+from pycaret.regression import setup as setup_reg, automl as automl_reg
 
 # Title of the app
 st.title('PyCaret & Streamlit App')
