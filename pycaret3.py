@@ -22,15 +22,19 @@ if uploaded_file is not None:
 
     # Read the uploaded file
     data = pd.read_csv(uploaded_file)
+    cat_columns = data.select_dtypes(include=["object"])
 
     # Handle missing values
+    for col in data.select_dtypes(include=["object"]):
+        mode_values = data[column].mode()[0]
+        data[column].fillna(mode_values, inplace=True)
+
     for col in data.columns:
         if pd.api.types.is_numeric_dtype(data[col]):
             data[col].fillna(data[col].mean(), inplace=True)  # fill with mean for numeric columns
         else:
             data[col].fillna(data[col].mode()[0], inplace=True)  # fill with mode for categorical columns
-    for col in data.columns:
-        data[col] = data[col].astype(int)
+
     st.write('Missing values are handled')
 
     # Show the uploaded file
