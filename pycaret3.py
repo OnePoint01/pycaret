@@ -1,5 +1,6 @@
 # Import necessary libraries
 import streamlit as st
+from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
