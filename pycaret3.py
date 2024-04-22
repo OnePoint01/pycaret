@@ -26,8 +26,8 @@ if uploaded_file is not None:
 
     # Handle missing values
     for col in data.select_dtypes(include=["object"]):
-        mode_values = data[column].mode()[0]
-        data[column].fillna(mode_values, inplace=True)
+        mode_values = data[col].mode()[0]
+        data[col].fillna(mode_values, inplace=True)
 
     for col in data.columns:
         if pd.api.types.is_numeric_dtype(data[col]):
