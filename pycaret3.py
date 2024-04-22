@@ -29,7 +29,8 @@ if uploaded_file is not None:
             data[col].fillna(data[col].mean(), inplace=True)  # fill with mean for numeric columns
         else:
             data[col].fillna(data[col].mode()[0], inplace=True)  # fill with mode for categorical columns
-    data[col] = data[col].astype(int)
+    for col in data.columns:
+        data[col] = data[col].astype(int)
     st.write('Missing values are handled')
 
     # Show the uploaded file
