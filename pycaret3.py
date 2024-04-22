@@ -24,11 +24,15 @@ if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
     cat_columns = data.select_dtypes(include=["object"])
 
-    # Handle missing values
-    for col in data.select_dtypes(include=["object"]):
-        mode_values = data[col].mode()[0]
-        data[col].fillna(mode_values, inplace=True)
+    # Initialize LabelEncoder
+    le = LabelEncoder()
 
+    # Transform object type columns using LabelEncoder
+    for col in data.columns:
+        if data[col].dtype == 'object':
+            data[col] = le.fit_transform(data[col].astype(str))
+            
+    # Handle missing values
     for col in data.columns:
         if pd.api.types.is_numeric_dtype(data[col]):
             data[col].fillna(data[col].mean(), inplace=True)  # fill with mean for numeric columns
