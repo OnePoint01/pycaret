@@ -23,6 +23,11 @@ if uploaded_file is not None:
     # Read the uploaded file
     data = pd.read_csv(uploaded_file)
 
+    # Convert columns to integer type if possible
+    for col in data.columns:
+        if pd.api.types.is_numeric_dtype(data[col]):
+            data[col] = data[col].astype(int)
+
     # Show the uploaded file
     st.write(data)
 
