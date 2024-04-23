@@ -24,17 +24,6 @@ if uploaded_file is not None:
     # Read the uploaded file
     df = pd.read_csv(uploaded_file)
 
-        # Initialize LabelEncoder
-    le = LabelEncoder()
-    
-    # Handle missing values and transform object type columns using LabelEncoder
-    for col in df.columns:
-        if df[col].dtype == 'object':
-            df[col] = df[col].fillna(df[col].mode()[0])  # fill missing values with mode for categorical columns
-            df[col] = le.fit_transform(df[col].astype(str))  # transform with LabelEncoder
-        else:
-            df[col] = df[col].fillna(df[col].mean())  # fill missing values with mean for numeric columns
-
     st.write('Missing values are handled correctly')
 
     # Show the uploaded file
@@ -55,14 +44,63 @@ if uploaded_file is not None:
     # Display summary statistics
     st.write('Summary Statistics:', df.describe().transpose())
 
+    # Ask user for the target column
+    global ColTarget
+    ColTarget = st.selectbox("Select the target column", df.columns)
+
+    if len(target) != 0:
+        select_columns = st.multiselect("select the column you want removed from the dataframe",options=df.columns)
+        data.drop(select_columns, axis=1, inplace=True)
+        st.write(data.sample())
+        
+    # Initialize LabelEncoder
+    le = LabelEncoder()
+    
+    # Handle missing values and transform object type columns using LabelEncoder
+    '''for col in df.columns:
+        if df[col].dtype == 'object':
+            df[col] = df[col].fillna(df[col].mode()[0])  # fill missing values with mode for categorical columns
+            df[col] = le.fit_transform(df[col].astype(str))  # transform with LabelEncoder
+        else:
+            df[col] = df[col].fillna(df[col].mean())  # fill missing values with mean for numeric columns'''
+    
+    numerical_columns = df.select_dtypes(['int64', 'float64']).columns
+    categorical_columns = df.select_dtypes(['object']).columns
+    missing_value_num = st.radio(
+        "Set missing value for numerical value 👇",
+        ["mean", "median"]
+        
+    )
+    missing_value_cat = st.radio(
+        "Set missing value for numerical value 👇",
+        [ 'most frequent' ,"put additional class" ]
+        
+        
+    )
+    for col in numerical_columns:
+        df[col] = SimpleImputer(strategy=missing_value_num, missing_values=np.nan).fit_transform(df[col].values.reshape(-1, 1))
+    for col in categorical_columns:
+        if df[col].nunique() > 7 :
+            df[col] = SimpleImputer(strategy='most_frequent', missing_values=np.nan).fit_transform(df[col].values.reshape(-1, 1))
+        else:
+            df[col] = LabelEncoder().fit_transform(df[col])
+    if (len(numerical_columns) != 0):
+        st.header("Numerical Columns")
+        st.write(numerical_features)
+    if (len(numerical_columns) != 0):
+        st.header("Categorical columns")
+        st.write(categorical_columns)
+    if (len(categorical_columns) != 0 or len(numerical_columns) != 0):
+        st.header("number of null value ")
+        st.write(df.isna().sum())
+        
     # Display correlation matrix using a heatmap
     st.write('Correlation Matrix:')
     fig, ax = plt.subplots(figsize=(10,10))
     sns.heatmap(df.corr(), annot=True, ax=ax)
     st.pyplot(fig)
 
-    # Ask user for the target column
-    ColTarget = st.sidebar.selectbox('Select the target column', df.columns.tolist())
+    #ColTarget = st.sidebar.selectbox('Select the target column', df.columns.tolist())
     if ColTarget is not None:
         # Check if target column values are numeric (Regression) or not (Classification)
         if pd.api.types.is_numeric_dtype(df[ColTarget]):
