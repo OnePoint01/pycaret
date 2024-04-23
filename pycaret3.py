@@ -51,7 +51,7 @@ if uploaded_file is not None:
     if len(ColTarget) != 0:
         select_columns = st.multiselect("select the column you want removed from the dataframe",options=df.columns)
         df.drop(select_columns, axis=1, inplace=True)
-        st.write(data.sample())
+        st.write(df.sample())
         
     # Initialize LabelEncoder
     le = LabelEncoder()
