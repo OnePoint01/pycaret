@@ -21,7 +21,7 @@ st.sidebar.title("Sidebar")
 
 # Add a file uploader to the sidebar
 uploaded_file = st.sidebar.file_uploader(label="Upload your input CSV file", type=['csv'])
-ColTarget
+ColTarget =0
 # Check if a file is uploaded
 if uploaded_file is not None:
 
