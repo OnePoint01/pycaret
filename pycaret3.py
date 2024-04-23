@@ -3,6 +3,7 @@ import streamlit as st
 from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
