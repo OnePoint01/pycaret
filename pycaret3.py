@@ -112,14 +112,18 @@ if uploaded_file is not None:
             # Setup PyCaret for Regression
             exp_reg = setup_reg(data = df, target = ColTarget, session_id=123, verbose=False)
             # Use AutoML to select the best model
-            best_model = automl_reg(optimize = 'R2')  # optimize for R-squared for regression
+            #best_model = automl_reg(optimize = 'R2')  # optimize for R-squared for regression
+            # Compare models and select the best one
+            best_model = compare_models()
             available_clf_models = clf_models(exp_reg)
             st.write('available_clf_models:', available_clf_models)
         else:
             # Setup PyCaret for Classification
             exp_clf = setup_clf(data = df, target = ColTarget, session_id=123, verbose=False)
             # Use AutoML to select the best model
-            best_model = automl_clf(optimize = 'Accuracy')  # optimize for accuracy for classification
+            #best_model = automl_clf(optimize = 'Accuracy')  # optimize for accuracy for classification
+            # Compare models and select the best one
+            best_model = compare_models()
             available_reg_models = reg_models(exp_clf)
             st.write('available_clf_models:', available_reg_models)
 
