@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Import necessary functions from PyCaret
-from pycaret.classification import setup as setup_clf,comparemodels
-from pycaret.regression import setup as setup_reg,comparemodels
+from pycaret.classification import setup as setup_clf,compare_models as compare_models_clf
+from pycaret.regression import setup as setup_reg,compare_models as compare_models_reg
 
 # Title of the app
 st.title('PyCaret & Streamlit App Capstone')
@@ -99,12 +99,12 @@ if uploaded_file is not None:
             # Setup PyCaret for Regression
             exp_reg = setup_reg(data = df, target = ColTarget, session_id=123, verbose=False)
             # Compare models and select the best one
-            best_model = compare_models()
+            best_model = compare_models_reg()
         else:
             # Setup PyCaret for Classification
             exp_clf = setup_clf(data = df, target = ColTarget, session_id=123, verbose=False)
             # Compare models and select the best one
-            best_model = compare_models()
+            best_model = compare_models_clf()
 
         # Display the best model
         st.write(best_model)
