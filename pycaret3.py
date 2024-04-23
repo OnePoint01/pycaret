@@ -21,7 +21,7 @@ st.sidebar.title("Sidebar")
 
 # Add a file uploader to the sidebar
 uploaded_file = st.sidebar.file_uploader(label="Upload your input CSV file", type=['csv'])
-
+ColTarget
 # Check if a file is uploaded
 if uploaded_file is not None:
 
@@ -49,7 +49,7 @@ if uploaded_file is not None:
     st.write('Summary Statistics:', df.describe().transpose())
 
     # Ask user for the target column
-    ColTarget
+    
     ColTarget = st.selectbox("Select the target column", df.columns)
 
     if len(ColTarget) != 0:
