@@ -85,7 +85,7 @@ if uploaded_file is not None:
         if df[col].nunique() > 7 :
             df[col] = SimpleImputer(strategy='most_frequent', missing_values=np.nan).fit_transform(df[col].values.reshape(-1, 1))
         else:
-            df[col] = le().fit_transform(df[col])
+            df[col] = le.fit_transform(df[col])
     if (len(numerical_columns) != 0):
         st.header("Numerical Columns")
         st.write(numerical_features)
