@@ -48,7 +48,7 @@ if uploaded_file is not None:
     global ColTarget
     ColTarget = st.selectbox("Select the target column", df.columns)
 
-    if len(target) != 0:
+    if len(ColTarget) != 0:
         select_columns = st.multiselect("select the column you want removed from the dataframe",options=df.columns)
         data.drop(select_columns, axis=1, inplace=True)
         st.write(data.sample())
