@@ -88,7 +88,7 @@ if uploaded_file is not None:
             df[col] = le.fit_transform(df[col])
     if (len(numerical_columns) != 0):
         st.header("Numerical Columns")
-        st.write(numerical_features)
+        st.write(numerical_columns)
     if (len(numerical_columns) != 0):
         st.header("Categorical columns")
         st.write(categorical_columns)
