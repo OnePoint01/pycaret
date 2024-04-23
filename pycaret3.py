@@ -1,6 +1,7 @@
 # Import necessary libraries
 import streamlit as st
 from sklearn.preprocessing import LabelEncoder
+from sklearn.impute import SimpleImputer
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -77,13 +78,14 @@ if uploaded_file is not None:
         
         
     )
+    SI = SimpleImputer()
     for col in numerical_columns:
-        df[col] = SimpleImputer(strategy=missing_value_num, missing_values=np.nan).fit_transform(df[col].values.reshape(-1, 1))
+        df[col] = SI(strategy=missing_value_num, missing_values=np.nan).fit_transform(df[col].values.reshape(-1, 1))
     for col in categorical_columns:
         if df[col].nunique() > 7 :
-            df[col] = SimpleImputer(strategy='most_frequent', missing_values=np.nan).fit_transform(df[col].values.reshape(-1, 1))
+            df[col] = SI(strategy='most_frequent', missing_values=np.nan).fit_transform(df[col].values.reshape(-1, 1))
         else:
-            df[col] = LabelEncoder().fit_transform(df[col])
+            df[col] = le().fit_transform(df[col])
     if (len(numerical_columns) != 0):
         st.header("Numerical Columns")
         st.write(numerical_features)
