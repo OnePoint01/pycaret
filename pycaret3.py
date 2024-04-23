@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Import necessary functions from PyCaret
-from pycaret.classification import setup as setup_clf, automl as automl_clf,models as clf_models
-from pycaret.regression import setup as setup_reg, automl as automl_reg,models as reg_models
+from pycaret.classification import setup as setup_clf,comparemodels
+from pycaret.regression import setup as setup_reg,comparemodels
 
 # Title of the app
 st.title('PyCaret & Streamlit App Capstone')
