@@ -49,7 +49,7 @@ if uploaded_file is not None:
     st.write('Summary Statistics:', df.describe().transpose())
 
     # Ask user for the target column
-    global ColTarget
+    ColTarget
     ColTarget = st.selectbox("Select the target column", df.columns)
 
     if len(ColTarget) != 0:
@@ -108,6 +108,7 @@ if uploaded_file is not None:
     if ColTarget is not None:
         # Check if target column values are numeric (Regression) or not (Classification)
         if pd.api.types.is_numeric_dtype(df[ColTarget]):
+            st.write(pd.api.types.is_numeric_dtype(df[ColTarget]))
             # Setup PyCaret for Regression
             exp_reg = setup_reg(data = df, target = ColTarget, session_id=123, verbose=False)
             # Use AutoML to select the best model
